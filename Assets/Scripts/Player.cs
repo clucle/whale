@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
                 dir_future = Vector3.forward;
             }
         }
+    }
+
+    void FixedUpdate()
+    {
         if (state == 1)
         {
             state = 2;
