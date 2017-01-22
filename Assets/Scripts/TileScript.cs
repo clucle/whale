@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
 
+    private float fallDelay = 0.5f;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,8 +21,16 @@ public class TileScript : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+
             TileManager.Instance.SpawnTile();
+            StartCoroutine(FallDown());
         }
+    }
+
+    IEnumerator FallDown()
+    {
+        yield return new WaitForSeconds(fallDelay);
+        GetComponent<Rigidbody>().isKinematic = false;
     }
 }
 

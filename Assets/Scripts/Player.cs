@@ -48,15 +48,34 @@ public class Player : MonoBehaviour
             state = 2;
             dir = dir_future;
             StartCoroutine("Move");
+
+
         }
     }
 
     IEnumerator Move()
     {
-        for (int k = 0; k < 60; k+=speed)
+        Vector3 currnetVector = transform.position;
+        Vector3 tmpVector;
+
+        for (int k = 0; k < 10; k+=speed)
         {
-            float amoutToMove = speed * Time.deltaTime;
-            transform.Translate(dir * amoutToMove);
+            if (dir == Vector3.forward)
+            {
+                tmpVector = new Vector3(0, 0, 0.1f) + currnetVector;
+                currnetVector = tmpVector;
+                transform.position = tmpVector;
+            } else
+            {
+                tmpVector = new Vector3(-0.1f, 0, 0) + currnetVector;
+                currnetVector = tmpVector;
+                transform.position = tmpVector;
+            }
+
+            
+
+            //float amoutToMove = speed * Time.deltaTime;
+            //transform.Translate(dir * amoutToMove);
             yield return null;
         }
         state = 1;
