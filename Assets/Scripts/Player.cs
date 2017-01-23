@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        speed = 1;
+        speed = 50;
         state = 0;
     }
 
@@ -53,12 +53,28 @@ public class Player : MonoBehaviour
 
     IEnumerator Move()
     {
-        for (int k = 0; k < 60; k+=speed)
+        for (int k = 0; k < 1000; k+=speed)
         {
-            float amoutToMove = speed * Time.deltaTime;
+            float amoutToMove = speed * 0.001f;
             transform.Translate(dir * amoutToMove);
             yield return null;
         }
         state = 1;
     }
 }
+
+//Vector3 currnetVector = transform.position;
+//Vector3 tmpVector;
+/*
+if (dir == Vector3.forward)
+{
+    tmpVector = new Vector3(0, 0, 0.1f) + currnetVector;
+    currnetVector = tmpVector;
+    transform.position = tmpVector;
+} else
+{
+    tmpVector = new Vector3(-0.1f, 0, 0) + currnetVector;
+    currnetVector = tmpVector;
+    transform.position = tmpVector;
+}*/
+
