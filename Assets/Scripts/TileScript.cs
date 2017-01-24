@@ -31,6 +31,8 @@ public class TileScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(fallDelay);
         GetComponent<Rigidbody>().isKinematic = false;
+        yield return new WaitForSeconds(2);
+        gameObject.SetActive(false);
     }
 }
 
