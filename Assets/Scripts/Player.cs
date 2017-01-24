@@ -12,17 +12,20 @@ public class Player : MonoBehaviour
     private Vector3 dir;
     private Vector3 dir_future;
 
+    private bool isDead;
+
     // Use this for initialization
     void Start()
     {
         speed = 50;
         state = 0;
+        isDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isDead)
         {
             if (state == 0)
             {
@@ -46,7 +49,11 @@ public class Player : MonoBehaviour
         if (state == 1)
         {
             state = 2;
-            dir = dir_future;
+            if (!isDead)
+            {
+                dir = dir_future; 
+            }
+
             StartCoroutine("Move");
         }
     }
@@ -61,20 +68,19 @@ public class Player : MonoBehaviour
         }
         state = 1;
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Tile" && !isDead)
+        {
+            RaycastHit hit;
+            Ray downRay = new Ray(transform.position, -Vector3.up);
+
+            if(!Physics.Raycast(downRay, out hit) && !isDead)
+            {
+                isDead = true;
+                transform.GetChild(0).transform.parent = null;
+            }
+        }
+    }
 }
-
-//Vector3 currnetVector = transform.position;
-//Vector3 tmpVector;
-/*
-if (dir == Vector3.forward)
-{
-    tmpVector = new Vector3(0, 0, 0.1f) + currnetVector;
-    currnetVector = tmpVector;
-    transform.position = tmpVector;
-} else
-{
-    tmpVector = new Vector3(-0.1f, 0, 0) + currnetVector;
-    currnetVector = tmpVector;
-    transform.position = tmpVector;
-}*/
-
