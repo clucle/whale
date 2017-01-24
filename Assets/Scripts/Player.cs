@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     private bool isDead;
 
+
     // Use this for initialization
     void Start()
     {
@@ -79,8 +80,12 @@ public class Player : MonoBehaviour
             if(!Physics.Raycast(downRay, out hit) && !isDead)
             {
                 isDead = true;
-                transform.GetChild(0).transform.parent = null;
+                transform.GetChild(2).transform.parent = null; //walls
+                transform.GetChild(1).transform.parent = null; //sea
+                transform.GetChild(0).transform.parent = null; //camera
+                
             }
         }
     }
+
 }
