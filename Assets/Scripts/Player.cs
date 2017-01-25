@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class Player : MonoBehaviour
 
     private bool isDead;
 
+    public GameObject resetBtn;
+    public Text scoreText;
+    public int score = 0;
 
     // Use this for initialization
     void Start()
@@ -85,6 +89,9 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Tile" && !isDead)
         {
+            score++;
+            scoreText.text = score.ToString();
+
             RaycastHit hit;
             Ray downRay = new Ray(transform.position, -Vector3.up);
 
@@ -93,7 +100,7 @@ public class Player : MonoBehaviour
                 isDead = true;
                 transform.GetChild(1).transform.parent = null; //sea
                 transform.GetChild(0).transform.parent = null; //camera
-                
+                resetBtn.SetActive(true);
             }
         }
     }
