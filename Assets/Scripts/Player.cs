@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
             if (state == 0)
             {
                 state = 1;
+                dir = Vector3.forward;
                 dir_future = Vector3.left;
             }
 
@@ -52,6 +53,16 @@ public class Player : MonoBehaviour
             state = 2;
             if (!isDead)
             {
+                if (dir != dir_future)
+                {
+                    if (dir_future == Vector3.left)
+                    {
+                        transform.GetChild(2).transform.Rotate(0, -90, 0);
+                    } else
+                    {
+                        transform.GetChild(2).transform.Rotate(0, 90, 0);
+                    }
+                }
                 dir = dir_future; 
             }
 
@@ -80,7 +91,6 @@ public class Player : MonoBehaviour
             if(!Physics.Raycast(downRay, out hit) && !isDead)
             {
                 isDead = true;
-                transform.GetChild(2).transform.parent = null; //walls
                 transform.GetChild(1).transform.parent = null; //sea
                 transform.GetChild(0).transform.parent = null; //camera
                 
