@@ -90,6 +90,10 @@ public class Player : MonoBehaviour
         if (other.tag == "Tile" && !isDead)
         {
             score++;
+            if (score % 50 == 0)
+            {
+
+            }
             scoreText.text = score.ToString();
 
             RaycastHit hit;
