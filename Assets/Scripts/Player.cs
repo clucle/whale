@@ -8,10 +8,13 @@ public class Player : MonoBehaviour
 
     private int speed;
 
+    private int[] speedArray = { 20, 25, 40, 50, 100, 125 };
+
+
     private byte state; // 0 stop, 1 select, 2 move
 
     private Vector3 dir;
-    private Vector3 dir_future;
+    private Vector3 dirFuture;
 
     private bool isDead;
 
@@ -19,10 +22,11 @@ public class Player : MonoBehaviour
     public Text scoreText;
     public int score = 0;
 
+
     // Use this for initialization
     void Start()
     {
-        speed = 50;
+        speed = speedArray[0];
         state = 0;
         isDead = false;
     }
@@ -36,16 +40,18 @@ public class Player : MonoBehaviour
             {
                 state = 1;
                 dir = Vector3.forward;
-                dir_future = Vector3.left;
+                dirFuture = Vector3.left;
             }
 
-            if (dir_future == Vector3.forward)
+            if (dirFuture == Vector3.forward)
             {
-                dir_future = Vector3.left;
+                dirFuture = Vector3.left;
+                transform.GetChild(3).transform.Rotate(0, -90, 0);
             }
             else
             {
-                dir_future = Vector3.forward;
+                dirFuture = Vector3.forward;
+                transform.GetChild(3).transform.Rotate(0, 90, 0);
             }
         }
     }
@@ -57,9 +63,9 @@ public class Player : MonoBehaviour
             state = 2;
             if (!isDead)
             {
-                if (dir != dir_future)
+                if (dir != dirFuture)
                 {
-                    if (dir_future == Vector3.left)
+                    if (dirFuture == Vector3.left)
                     {
                         transform.GetChild(2).transform.Rotate(0, -90, 0);
                     } else
@@ -67,7 +73,7 @@ public class Player : MonoBehaviour
                         transform.GetChild(2).transform.Rotate(0, 90, 0);
                     }
                 }
-                dir = dir_future; 
+                dir = dirFuture; 
             }
 
             StartCoroutine("Move");
@@ -90,9 +96,9 @@ public class Player : MonoBehaviour
         if (other.tag == "Tile" && !isDead)
         {
             score++;
-            if (score % 50 == 0)
+            if (score % 10 == 0)
             {
-
+                if (score / 10 < 6) speed = speedArray[score / 10];
             }
             scoreText.text = score.ToString();
 
